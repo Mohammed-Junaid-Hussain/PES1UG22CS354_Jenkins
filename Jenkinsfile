@@ -2,10 +2,18 @@ pipeline {
     agent any
     
     stages {
+        stage('Clone Repository') {
+            steps {
+                script {
+                    sh 'git clone https://github.com/Mohammed-Junaid-Hussain/PES1UG22CS354_Jenkins.git'
+                }
+            }
+        }
+        
         stage('Build') {
             steps {
                 script {
-                    sh 'g++ -o PES1UG22CS354 main.cpp' // Compiles C++ file
+                    sh 'g++ -o PES1UG22CS354 PES1UG22CS354_Jenkins/working.cpp'
                 }
             }
         }
@@ -13,21 +21,22 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh './PES1UG22CS354' // Runs the compiled file
+                    sh './PES1UG22CS354'
                 }
             }
         }
         
         stage('Deploy') {
             steps {
-                echo "Deploying the application..."
+                echo 'deploy'
+                // Add deployment steps here
             }
         }
     }
     
     post {
         failure {
-            echo 'Pipeline failed' // Post action in case of failure
+            echo 'pipeline failed'
         }
     }
 }
